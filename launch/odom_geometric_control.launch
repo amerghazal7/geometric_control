@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    
+    <node pkg="geometric_control" type="control_using_odom.py" name="geometric_control" output="screen"  >
+        <param name="enable_plotter" value="False"/>
+        <param name="odom_topic" value="/dlo/odom_node/odom"/>
+        <param name="waypoints_file" type="String" value="$(find geometric_control)/data/w_test2.csv"/>
+    </node>
+
+</launch>
