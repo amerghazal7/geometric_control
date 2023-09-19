@@ -44,3 +44,15 @@ pip install cvxpy
 # Install scipy
 pip install scipy
 ```
+
+#### Clone the repo into catkin_ws/src then:
+```bash
+cd catkin_ws
+catkin_make
+source devel/setup.sh
+roslaunch geometric_control odom_geometric_control.launch
+```
+#### Checkout the launch file to specify waypoints file.
+
+### Waypoints Generation Helper
+**wayPointsGenration.ipynb** Inside **../data** folder, is a jupyter notebook that explains the process.
