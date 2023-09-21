@@ -43,6 +43,9 @@ pip install cvxpy
 
 # Install scipy
 pip install scipy
+
+# Install pygame
+pip install pygame
 ```
 
 #### Clone the repo into catkin_ws/src then:

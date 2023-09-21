@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import math
-import serial
 from turtle import pos, position
 from controller2d import Controller2D
 import rospy, time
@@ -14,14 +13,6 @@ import csv
 import matplotlib
 matplotlib.use("Agg")  # or whichever backend you wish to use
 import matplotlib.pyplot as plt
-
-
-serial_port = "/dev/ttyUSB1"
-baud_rate = 115200
-ser = serial.Serial(serial_port, baud_rate)
-data_to_send = ""
-drive_speed = 50
-steering_speed = 50
 
 
 import live_plotter as lv   # Custom live plotting library
@@ -362,19 +353,12 @@ def init_pub_sub():
     while not rospy.is_shutdown():
         if reached_end:
             rospy.loginfo("Reached the end!!")
-            output_steering = output_throttle = 50
+            output_steering = output_throttle = 0
         else:
             new_waypoints = find_nearest()
             apply_control(new_waypoints)
         throttle_publisher.publish(output_throttle)
         steering_publisher.publish(output_steering)
-
-        data_to_send = "d:%3.d" % (int(output_throttle))
-        data_to_send += ",s:%3.d" % (int(output_steering))
-        rospy.loginfo(data_to_send)
-        str_data = str(data_to_send) + "\n"
-        ser.write(str_data.encode(encoding="ascii"))  # Send the integer data as a string
-
 
         # Update live plotter with new feedback
         trajectory_fig.roll("trajectory", position[0], position[1])
@@ -408,7 +392,6 @@ def init_pub_sub():
             lp_traj.refresh()
             lp_1d.refresh()
             live_plot_timer.lap()
-            position[0] = position[0] + 0.25
 
         rate.sleep()
 
